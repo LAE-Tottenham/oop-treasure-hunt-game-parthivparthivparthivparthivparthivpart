@@ -8,7 +8,6 @@ class Player:
         self.max_health = 150
         self.weapon = "Laser Pistol"
         self.weapon_power = 25  
-        self.level = 1
         self.inventory = []
         self.total_weight = 0
         self.weight_limit = 50
@@ -180,8 +179,8 @@ def fight(enemy, player, shield_active):
             print(f"\n{enemy.name} has {enemy.health} health left.")
         elif action == "2":
             print("\nYour inventory:")
-            for idx, item in enumerate(player.inventory):
-                print(f"{idx + 1}. {item['name']}")
+            for j, item in enumerate(player.inventory):
+                print(f"{j + 1}. {item['name']}")
             item_choice = int(input("\nWhich item would you like to use? (Enter the number): ")) - 1
             if 0 <= item_choice < len(player.inventory):
                 item = player.inventory[item_choice]
@@ -237,7 +236,7 @@ def manage_inventory(player):
             print("Invalid choice.")
 
 def intro():
-    print("Welcome to the Sci-Fi Adventure!")
+    print("Welcome to universe 340392-gyyt")
     time.sleep(1)
     print("\nIn a distant future, a lost alien artifact holds the key to unimaginable power. The artifact is heavily guarded by robotic overlords and alien creatures.")
     time.sleep(2)
@@ -310,6 +309,7 @@ def main():
 
             if not fight(enemy, player, shield_active):
                 print("You failed your quest. It is all OVER and YOU MESSED UP")
+                break
 
     print("\nYou have defeated Gaper Bingzoid and saved the universe!")
     if 'Artifact of Power' in [item['name'] for item in player.inventory]:
