@@ -63,11 +63,6 @@ class Player:
         else:
             print(f"Your inventory is full! You can't carry {item['name']}.")
 
-    def drop_item(self, item):
-        self.inventory.remove(item)
-        self.total_weight -= item['weight']
-        print(f"You dropped {item['name']} from your inventory.")
-
     def use_item(self, item):
         if item['name'] == 'Healing Potion':
             self.heal(50)  
