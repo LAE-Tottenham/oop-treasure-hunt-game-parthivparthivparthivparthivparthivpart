@@ -243,10 +243,10 @@ def post_boss_prompt(player, key_item_name, area):
 
         if choice == "1":
             print(f"You used the {key_item_name} to unlock the path to the next area.")
-            return True  # Move to the next area
+            return True  
         elif choice == "2":
             print(f"You decide to explore the {area.name} one more time.")
-            area.explore(player)  # Explore the area again
+            area.explore(player)  
             manage_inventory(player)
         else:
             print("Invalid choice. Please try again.")
