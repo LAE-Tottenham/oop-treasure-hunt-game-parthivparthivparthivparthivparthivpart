@@ -64,9 +64,6 @@ class Player:
             print(f"Your inventory is full! You can't carry {item['name']}.")
 
     def use_item(self, item):
-        if item not in self.inventory: 
-            print(f"{item['name']} is not in your inventory.")
-            return None  
         if item['name'] == 'Healing Potion':
             self.heal(50)  
             self.inventory.remove(item)
@@ -101,7 +98,6 @@ class Player:
             else:
                 print(f"\nYou ate the {item['name']} but it didn't work as expected. No dodge this time.")
                 return None
-        return None
 
 class Enemy:
     def __init__(self, name, health, attack, is_boss=False, voice_lines=None, key_item=None):
@@ -201,17 +197,9 @@ def fight(enemy, player, shield_active):
 
         if enemy.health <= 0:
             print(f"You defeated the {enemy.name}!")
-            if enemy.is_boss:
-                if enemy.name == "Kanye West" and random.random() < 0.2: 
-                    rare_item = "Carti's Album"
-                    print(f"\nWow! Kanye West dropped a rare item: {rare_item}!")
-                    player.add_to_inventory({'name': rare_item, 'weight': 1})
-                
-                    print("You feel the power of Carti's Album guiding you to a mysterious place...")
-                    return "Carti's House"
-                elif enemy.key_item:
-                    print(f"You obtained the {enemy.key_item}!")
-                    player.add_to_inventory({'name': enemy.key_item, 'weight': 1})
+            if enemy.is_boss and enemy.key_item:
+                print(f"You obtained the {enemy.key_item}!")
+                player.add_to_inventory({'name': enemy.key_item, 'weight': 1})
             return True
         
         print(f"\n{enemy.name} attacks you!")
@@ -334,11 +322,6 @@ def main():
             Enemy("Mecha Terror", 250, 15, voice_lines=["You cannot match my might!"]),
             Enemy("Cyber Warrior", 250, 20, voice_lines=["I am the future of warfare."]),
             Enemy("Gaper Bingzoid", 400, 20, is_boss=True, voice_lines=["The universe will crumble before me!"])
-        ]),
-        Place("Carti's House", "You listened to carti's album, and you got transported to Carti's house, where he wishes to confront you", [
-            Enemy("Carti's Security", 150, 15, voice_lines=["Nobody sees Carti without my approval!", "You don't belong here."]),
-            Enemy("Carti's Muse", 200, 20, voice_lines=["Carti's art will destroy you.", "You can't handle this energy."]),
-            Enemy("Playboi Carti", 400, 25, is_boss=True, voice_lines=["God has given me a second chance", "GIVE MY ALBUM BACK NOBODY CAN TAKE IT"], key_item="Carti's Legacy")
         ])
     ]
 
@@ -378,17 +361,6 @@ def main():
                     break
 
     print("\nYou have defeated Gaper Bingzoid and saved the universe!")
-    if "Carti's Legacy" in [item['name'] for item in player.inventory]:
-        use_carti_legacy = input("Do you want to read the legacy that Carti has left behind? (yes/no): ").lower()
-        if use_carti_legacy == "yes":
-            print("\nCarti Ending: You read his legacy, inspiring you to start creating music like him, thus becoming the next Playboi Carti, and now becoming the best musician in the new age")
-        else:
-            if 'Artifact of Power' in [item['name'] for item in player.inventory]:
-                use_artifact = input("Do you want to use the Artifact of Power to reshape the universe? (yes/no): ").lower()
-                if use_artifact == "yes":
-                    print("\nGood Ending: You used the Artifact of Power to bring peace to the galaxy and unlock limitless possibilities!")
-                else:
-                    print("\nBad Ending: You chose not to use the Artifact of Power. The universe remains in turmoil, and the potential for greatness is lost.")            
     if 'Artifact of Power' in [item['name'] for item in player.inventory]:
         use_artifact = input("Do you want to use the Artifact of Power to reshape the universe? (yes/no): ").lower()
         if use_artifact == "yes":
